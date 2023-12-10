@@ -42,3 +42,24 @@ for id, game in games.items():
     sum_of_ids += evaluate_game(id, game)
 
 print("The sum of all possible game IDs is", sum_of_ids)
+
+# Part 2
+
+def find_power_cubes(game):
+    min_cubes = {"red": 0, "green": 0, "blue": 0}
+    for subset in game:
+        for cube_color in subset:
+            number, color = cube_color.split()
+            if int(number) > min_cubes[color]:
+                min_cubes[color] = int(number)
+    power = 1
+    for color, value in min_cubes.items():
+        power *= value
+    return power
+
+sum_of_powers = 0
+
+for game in games.values():
+    sum_of_powers += find_power_cubes(game)
+
+print("The sum of the powers of the minimum number of cubes necessary is", sum_of_powers)
