@@ -1,4 +1,4 @@
-# AoC 2023 --- Day 1 
+# AoC 2023 --- Day 2 
 
 # import puzzle input
 imported_data = list()
