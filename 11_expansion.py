@@ -22,7 +22,7 @@ def transpose(nested_lst):
 
 expanded_universe = transpose(expand(transpose(expand(imported_data))))
 
-# define location of galaxies within universe 
+# define location of galaxies within expanded universe 
 
 galaxies = dict()
 galaxy_counter = 1
@@ -56,3 +56,54 @@ for pair in galaxy_pairs:
     total += find_shortest_path(*pair)
 
 print(f"The sum of the shortest paths between all galaxy pairs is {total} steps.")
+
+# Part 2
+
+# define location of galaxies within original universe 
+
+galaxies_o = dict()
+galaxy_counter_o = 1
+for i in range(len(imported_data)):
+    for j in range(len(imported_data[0])):
+        if imported_data[i][j] == "#":
+            imported_data[i][j] = str(galaxy_counter_o)
+            galaxies_o[str(galaxy_counter_o)] = (i, j)
+            galaxy_counter_o += 1
+
+# find all galaxy pairs
+
+combinations_o = list(galaxies_o)
+galaxy_pairs_o = list()
+for i in range(len(combinations_o)):
+    for j in range(i+1, len(combinations_o)):
+        galaxy_pairs_o.append((combinations_o[i], combinations_o[j]))
+
+# find shortest path between two galaxies
+
+def find_shortest_path(gal1, gal2): # doesn't work --> find out why
+    distance1 = abs(galaxies_o[gal1][0] - galaxies_o[gal2][0])
+    distance2 = abs(galaxies_o[gal1][1] - galaxies_o[gal2][1])
+    return distance1 + distance2
+
+# calculate sum of shortest paths between all galaxy pairs in original universe
+
+total_o = 0
+
+for pair_o in galaxy_pairs_o:
+    total_o += find_shortest_path(*pair_o)
+
+print(f"The sum of the shortest paths between all galaxy pairs in the original universe is {total_o} steps.")
+
+# find multiplication factor
+
+difference = total-total_o
+ten_times = difference*8
+tenth_difference = ten_times + difference
+
+total_steps = total_o
+difference = tenth_difference
+for i in range(6):
+    total_steps += tenth_difference
+    tenth_difference *= 10
+
+print(f"According to new expansion rules the sum of the shortest paths between all galxy pairsis {total_steps} steps.")
