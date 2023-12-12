@@ -39,3 +39,22 @@ humidity_destinations = [find_destination(temperature, temperature_to_humidity) 
 locations = [find_destination(humidity, humidity_to_location) for humidity in humidity_destinations]
 
 print("The lowest location number is:", min(locations))
+
+# Part 2
+
+seed_ranges = [(seeds[i], seeds[i+1]) for i in range(0, len(seeds), 2)]
+
+seeds_part_2 = list()
+for tup in seed_ranges:
+    for i in range(tup[0], tup[0]+tup[1]):
+        seeds_part_2.append(i)
+
+soil_destinations = [find_destination(seed, seed_to_soil) for seed in seeds_part_2]
+fertilizer_destinations = [find_destination(soil, soil_to_fertilizer) for soil in soil_destinations]
+water_destinations = [find_destination(fertilizer, fertilizer_to_water) for fertilizer in fertilizer_destinations]
+light_destinations = [find_destination(water, water_to_light) for water in water_destinations]
+temperature_destinations = [find_destination(light, light_to_temperature) for light in light_destinations]
+humidity_destinations = [find_destination(temperature, temperature_to_humidity) for temperature in temperature_destinations]
+locations = [find_destination(humidity, humidity_to_location) for humidity in humidity_destinations]
+
+print("The lowest location number with seed ranges is:", min(locations))
