@@ -58,8 +58,28 @@ def extract_numbers(map):
             else:
                 if symbol_found:
                     num_list.append(num)
+                    print(num)
                     symbol_found = False
                 num = ""
     return [int(num) for num in num_list if num]
 
-print("The sum of all the part numbers in the engine schematic is:", sum(extract_numbers(imported_data)))
+print("The sum of all the part numbers in the engine schematic is:", len(extract_numbers(imported_data)), sum(extract_numbers(imported_data)))
+
+def find_sum_part_nums(map):
+    total = 0
+    num = ""
+    symbol_found = False
+    for i, line in enumerate(map):
+        for j, field in enumerate(line):
+            if field.isdigit():
+                num += field
+                if not symbol_found:
+                    symbol_found = find_adjacent_symbol(map, i, j)
+            else:
+                if symbol_found:
+                    total += int(num)
+                    symbol_found = False
+                num = ""
+    return total
+
+print("The sum of all the part numbers in the engine schematic is:", find_sum_part_nums(imported_data))
